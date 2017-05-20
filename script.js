@@ -6,7 +6,6 @@ var prompt = require('prompt');
   prompt.get(['lienModels', 'auteur'], function (err, result) {
     files = fs.readdirSync(result.lienModels);//, (err, files) => {
 
-      console.log(files);
       files.forEach(file => {
         let tablename = file.replace(".java","");
         fs.readFile('./template/[*table*]Dao.java', function(err, data){
@@ -52,7 +51,8 @@ var prompt = require('prompt');
       content = data.toString().replace(/\[\*Auteur\*\]/g, result.auteur);
 
       files.forEach(file =>{
-        content = content.replace(/\[\*GetInstanceImpl\*\]/g, "\n\t\t@Override\n \t\tpublic JpaAuteurDao getAuteurDao(){\n \t\t\treturn JpaAuteurDao.getInstance();\n \t\t}\n [*GetInstanceImpl*]");
+        let tablename = file.replace(".java","");
+        content = content.replace(/\[\*GetInstanceImpl\*\]/g, "\n\t\t@Override\n \t\tpublic Jpa"+tablename+"Dao get"+tablename+"Dao(){\n \t\t\treturn Jpa"+tablename+"Dao.getInstance();\n \t\t}\n [*GetInstanceImpl*]");
       });
       content = content.replace(/\[\*GetInstanceImpl\*\]/g, "");
       fs.writeFile('./dao/DaoFactoryJpa.java', content);
