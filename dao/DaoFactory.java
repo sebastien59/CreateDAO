@@ -7,10 +7,16 @@ package dao;
 
 /**
  *
- * @author [*Auteur*]
+ * @author sebastien
  */
 public abstract class DaoFactory {
-    [*GetInstanceSignature*]
+    	public abstract JpaAuteurDao getAuteurDao();
+	public abstract JpaCategorieDao getCategorieDao();
+	public abstract JpaInfoprincipaleDao getInfoprincipaleDao();
+	public abstract JpaInformationDao getInformationDao();
+	public abstract JpaInfosecondaireDao getInfosecondaireDao();
+	public abstract JpaParagrapheDao getParagrapheDao();
+
 
     public static DaoFactory getDaoFactory (PersistenceType type){
         switch(type){
