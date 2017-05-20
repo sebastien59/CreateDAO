@@ -6,6 +6,7 @@ var prompt = require('prompt');
   prompt.get(['lienModels', 'auteur'], function (err, result) {
     files = fs.readdirSync(result.lienModels);//, (err, files) => {
 
+      fs.mkdir('./dao');
       files.forEach(file => {
         let tablename = file.replace(".java","");
         fs.readFile('./template/[*table*]Dao.java', function(err, data){
@@ -23,7 +24,7 @@ var prompt = require('prompt');
 
           fs.writeFile('./dao/Jpa'+tablename+'Dao.java', content);
         });
- 
+
         fs.readFile('./template/Dao.java', function(err, data){
           content = data.toString().replace(/\[\*Auteur\*\]/g, result.auteur);
           fs.writeFile('./dao/Dao.java', content);
