@@ -36,12 +36,6 @@ var prompt = require('prompt');
         });
         ///fs.createReadStream('./template/DaoFactory.java').pipe(fs.createWriteStream('./dao/DaoFactory.java'));
 
-
-        fs.readFile('./template/DaoFactoryJpa.java', function(err, data){
-          content = data.toString().replace(/\[\*Auteur\*\]/g, result.auteur);
-          fs.writeFile('./dao/DaoFactoryJpa.java', content);
-        });
-
         fs.readFile('./template/PersistenceType.java', function(err, data){
           content = data.toString().replace(/\[\*Auteur\*\]/g, result.auteur);
           fs.writeFile('./dao/PersistenceType.java', content);
@@ -54,11 +48,21 @@ var prompt = require('prompt');
 
       });
 
+      data = fs.readFileSync('./template/DaoFactoryJpa.java');
+      content = data.toString().replace(/\[\*Auteur\*\]/g, result.auteur);
+
+      files.forEach(file =>{
+        content = content.replace(/\[\*GetInstanceImpl\*\]/g, "\n\t\t@Override\n \t\tpublic JpaAuteurDao getAuteurDao(){\n \t\t\treturn JpaAuteurDao.getInstance();\n \t\t}\n [*GetInstanceImpl*]");
+      });
+      content = content.replace(/\[\*GetInstanceImpl\*\]/g, "");
+      fs.writeFile('./dao/DaoFactoryJpa.java', content);
+
+
     data = fs.readFileSync('./template/DaoFactory.java');//, function(err, data){
     content = data.toString().replace(/\[\*Auteur\*\]/g, result.auteur);
     files.forEach(file => {
         let tablename = file.replace(".java","");
-        content = content.toString().replace(/\[\*GetInstanceSignature\*\]/g, "\tpublic abstract Jpa"+tablename+"Dao get"+tablename+"Dao();\n[*GetInstanceSignature*]");
+        content = content.toString().replace(/\[\*GetInstanceSignature\*\]/g, "\tpublic abstract Jpa"+tablename+"Dao get"+tablename+"Dao();\n\t[*GetInstanceSignature*]");
     });
 
     content =content.toString().replace(/\[\*GetInstanceSignature\*\]/g,"");

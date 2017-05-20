@@ -11,5 +11,5 @@ import dao.DaoFactory;
  * @author [*Auteur*]
  */
 public class DaoFactoryJpa extends DaoFactory{
-
+  [*GetInstanceImpl*]
 }
