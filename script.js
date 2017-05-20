@@ -23,7 +23,7 @@ var prompt = require('prompt');
 
           fs.writeFile('./dao/Jpa'+tablename+'Dao.java', content);
         });
-
+ 
         fs.readFile('./template/Dao.java', function(err, data){
           content = data.toString().replace(/\[\*Auteur\*\]/g, result.auteur);
           fs.writeFile('./dao/Dao.java', content);
