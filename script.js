@@ -3,7 +3,7 @@ var prompt = require('prompt');
 
   prompt.start();
 
-  prompt.get(['lienModels', 'auteur'], function (err, result) {
+  prompt.get(['lienModels','auteur'], function (err, result) {
     files = fs.readdirSync(result.lienModels);//, (err, files) => {
 
       fs.mkdir('./dao');
@@ -70,6 +70,6 @@ var prompt = require('prompt');
     fs.writeFile('./dao/DaoFactory.java', content);
 
     console.log('-------------------------------------------------')
-    console.log("Récupérez les fichiers DAO dans le dossier "+__dirname+"/dao");
+    console.log("Récupérez les fichiers DAO dans le dossier "+__dirname+"/dao Et modifier le nom de la persistance dans JpaDao.java");
     console.log('-------------------------------------------------')
 });
